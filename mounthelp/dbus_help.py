@@ -1,8 +1,20 @@
 #!/usr/bin/python
 
+#!/usr/bin/python
+
+"""
+dbus_help.py
+
+Provides functions to help locate usb mass storage devices using dbus
+"""
+
 import dbus
 
+
 def is_usb_mass_storage(device_props):
+  # Returns whether the given dictionary of device properties is a usb mass
+  # storage device or not
+
   if device_props['IdLabel'] != '' and \
         device_props['IdUsage'] == 'filesystem' and \
         device_props['DriveCanDetach']:
@@ -11,6 +23,8 @@ def is_usb_mass_storage(device_props):
     return False
 
 def get_device_props():
+  # Returns a dict containing the properties of all udisk devices found by dbus
+
   bus = dbus.SystemBus()
   ud_manager_obj = bus.get_object('org.freedesktop.UDisks',
                                   '/org/freedesktop/UDisks')
@@ -24,12 +38,16 @@ def get_device_props():
     proplist.append(device_props.GetAll('org.freedesktop.UDisks.Device'))
 
   return proplist
-    
-for device_props in get_device_props():
-  print '----------'
-  print device_props['DeviceFile']
-  if is_usb_mass_storage(device_props):
-    print 'It\'s a usb mass storage device'
-  else:
-    print 'It\'s not'
 
+def get_usb_mass_storage_device_props():
+  # Returns a list containing the properties of connected usb mass storage
+  # devices
+
+  props = get_device_props()
+  usbprops = []
+
+  for prop in props:
+    if is_usb_mass_storage(prop):
+      usbprops.append(prop)
+
+  return usbprops
