@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
 import sys
-import mounthelp.dbus_help as dbh
-import mounthelp.mount as mount
+import mountmenu.dbus_help as dbh
+import mountmenu.mount as mount
 
 def _print_horline():
   print '--------------------'
