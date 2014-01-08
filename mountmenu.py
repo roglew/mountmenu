@@ -38,7 +38,7 @@ while running:
       mounted_str = 'Mounted'
     else:
       mounted_str = 'Not Mounted'
-    print '%d) %s (%s)' % (cur_choice, dev['IdLabel'], mounted_str)
+    print '%d) [%s] %s (%s)' % (dev['DeviceFile'], cur_choice, dev['IdLabel'], mounted_str)
     cur_choice += 1
 
   _print_horline()
